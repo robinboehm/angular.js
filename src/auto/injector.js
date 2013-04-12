@@ -582,10 +582,13 @@ function createInjector(modulesToLoad) {
       }
     }
 
+    // Is Given function annotated like
+    // $injector.invoke(['serviceA', function(serviceA){}])
     function isInlineAnnotated(fn){
         return isArray(fn);
     }
 
+    // Get function of an annotated invoke description
     function getAnnotatedFunction(fn){
         if(isInlineAnnotated(fn)){
             return fn[fn.length - 1]
