@@ -582,11 +582,15 @@ function createInjector(modulesToLoad) {
       }
     }
 
+    function isInlineAnnotated(fn){
+        return isArray(fn);
+    }
+
     function instantiate(Type, locals) {
       var Constructor = function() {},
           instance, returnedValue;
 
-      Constructor.prototype = (isArray(Type) ? Type[Type.length - 1] : Type).prototype;
+      Constructor.prototype = (isInlineAnnotated(Type) ? Type[Type.length - 1] : Type).prototype;
       instance = new Constructor();
       returnedValue = invoke(Type, instance, locals);
 
