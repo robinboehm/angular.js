@@ -586,11 +586,24 @@ function createInjector(modulesToLoad) {
         return isArray(fn);
     }
 
+    function getAnnotatedFunction(fn){
+        if(isInlineAnnotated(fn)){
+            return fn[fn.length - 1]
+        }
+        else{
+            return fn;
+        }
+    }
+
     function instantiate(Type, locals) {
       var Constructor = function() {},
-          instance, returnedValue;
+          annotatedFunction,
+          instance,
+          returnedValue;
 
-      Constructor.prototype = (isInlineAnnotated(Type) ? Type[Type.length - 1] : Type).prototype;
+      annotatedFunction = getAnnotatedFunction(Type);
+
+      Constructor.prototype = annotatedFunction.prototype;
       instance = new Constructor();
       returnedValue = invoke(Type, instance, locals);
 
