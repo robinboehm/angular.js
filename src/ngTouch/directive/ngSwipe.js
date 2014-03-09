@@ -96,6 +96,7 @@ function makeSwipeDirective(directiveName, direction, eventName) {
       }
 
       $swipe.bind(element, {
+        'disableMouseEvents': angular.isDefined(attr['ngSwipeDisableMouse']),
         'start': function(coords, event) {
           startCoords = coords;
           valid = true;
